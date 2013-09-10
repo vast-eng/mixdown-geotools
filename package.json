@@ -4,7 +4,7 @@
   "description": "Geography tools for working with maps, or geometry in javascript. Can be used as library or in mixdown.",
   "main": "index.js",
   "scripts": {
-    "test": "tape tests/tap/*"
+    "test": "mocha -R spec -u tdd tests/*.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,10 @@
     "geolocation",
     "geometry"
   ],
+  "devDependencies": {
+    "mocha": "*",
+    "broadway": "~0.2.7"
+  },
   "author": "tommy@vast.com",
   "license": "MIT",
   "bugs": {
