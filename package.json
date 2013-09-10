@@ -1,0 +1,25 @@
+{
+  "name": "mixdown-geotools",
+  "version": "0.0.0",
+  "description": "Geography tools for working with maps, or geometry in javascript. Can be used as library or in mixdown.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape tests/tap/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vast-eng/mixdown-geotools.git"
+  },
+  "keywords": [
+    "geotools",
+    "geo",
+    "math",
+    "geolocation",
+    "geometry"
+  ],
+  "author": "tommy@vast.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vast-eng/mixdown-geotools/issues"
+  }
+}
