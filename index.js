@@ -42,6 +42,40 @@ var size = function(sw, ne, unit) {
 
 };
 
+// @param point {Object} - coordinates
+// @param point.latitude {Number} - latitude
+// @param point.longitude {Number} - longitude
+// @param distance {Number} - distance from center to calculate rect
+// @param unit {String} [optional] - possible values - "degrees", miles", "kilometers".  default is degrees
+// returns { width: , height: , diagonal: }
+var rect = function(point, distance, unit) {
+  unit = unit || 'degrees';
+
+  // convert to km or miles
+  // http://wiki.apache.org/solr/SolrAdaptersForLuceneSpatial4#Units.2C_Conversion
+  // Degrees to kilometers: degrees * 111.1951
+  // Degrees to miles: degrees * 69.09341
+  if (unit === 'kilometers') {
+    distance = distance/KM;
+  }
+  else if (unit === 'miles') {
+    distance = distance/MI;
+  }
+
+  return {
+    sw: {
+      latitude: point.latitude - distance,
+      longitude: point.longitude - distance
+    },
+    ne: {
+      latitude: point.latitude + distance,
+      longitude: point.longitude + distance
+    },
+    center: point
+  };
+
+};
+
 // http://en.wikipedia.org/wiki/Centroid#Of_a_finite_set_of_points
 // @param points {Array} - array of objects [ { latitude: 19.124, longitude: -91.123 } ]
 var midpoint = function(points) {
@@ -61,6 +95,21 @@ var midpoint = function(points) {
   };
 };
 
+// Parses a lat/lon string
+// @param pt {String} - lat,lon string ex: "29.01,-90.21"
+var parsePoint = function(pt) {
+  var ar = (pt || "").split(',');
+
+  if (ar.length !== 2) {
+    throw new Error('Invalid point string input. Must be in format "lat,lon"');
+  }
+
+  return {
+    latitude: Number(ar[0]),
+    longitude: Number(ar[1])
+  };
+};
+
 // Plugin for mixdown exposing the interfaces.
 var GeoToolsPlugin = function(namespace) {
 
@@ -73,7 +122,9 @@ var GeoToolsPlugin = function(namespace) {
   this.attach = function(options) {
     this[namespace] = {
       midpoint: midpoint,
-      size: size
+      size: size,
+      rect: rect,
+      parsePoint: parsePoint
     };
   };
 };
@@ -81,6 +132,8 @@ var GeoToolsPlugin = function(namespace) {
 module.exports = {
   GeoToolsPlugin: GeoToolsPlugin,
   midpoint: midpoint,
-  size: size  
+  size: size,
+  rect: rect,
+  parsePoint: parsePoint
 };
 
