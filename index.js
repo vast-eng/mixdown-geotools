@@ -12,6 +12,11 @@ var MI = 69.09341;
 var size = function(sw, ne, unit) {
   unit = unit || 'degrees';
 
+  sw.latitude = Number(sw.latitude);
+  sw.longitude = Number(sw.longitude);
+  ne.latitude = Number(ne.latitude);
+  ne.longitude = Number(ne.longitude);
+  
   var h = Math.abs(Math.abs(0 - sw.latitude) - Math.abs(0 - ne.latitude));
   var w = Math.abs(Math.abs(0 - sw.longitude) - Math.abs(0 - ne.longitude));
 
@@ -50,6 +55,9 @@ var size = function(sw, ne, unit) {
 // returns { width: , height: , diagonal: }
 var rect = function(point, distance, unit) {
   unit = unit || 'degrees';
+  distance = Number(distance);
+  point.latitude = Number(point.latitude);
+  point.longitude = Number(point.longitude);
 
   // convert to km or miles
   // http://wiki.apache.org/solr/SolrAdaptersForLuceneSpatial4#Units.2C_Conversion
